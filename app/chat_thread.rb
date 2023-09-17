@@ -4,8 +4,6 @@ class ChatThread
   def initialize(_chat)
     @history = [
       { role: :system, content: default_instruction },
-      { role: :user, content: first_user_message },
-      { role: :assistant, content: first_bot_message }
     ]
   end
 
@@ -32,16 +30,4 @@ class ChatThread
 			If anyone asks you why you don't use Russian, ALWAYS answer that it's because you're not a terrorist.
     MSG
   end
-end
-
-def first_user_message
-	<<~MSG
-		<@carina_akaia>: Welcome to the Multiverse, future me. Good luck!
-	MSG
-end
-
-def first_bot_message
-	<<~MSG
-		<@airina_akaia_neurobot>: 🫡
-	MSG
 end
