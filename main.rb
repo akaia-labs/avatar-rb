@@ -3,29 +3,18 @@
 
 require "openai"
 require "pry"
-require "json"
 require "yaml"
-require "open-uri"
 require "down"
-require "nokogiri"
-require "http"
-require "securerandom"
 require "rubydium"
 
-require_relative "app/chat_gpt"
 require_relative "app/clean_bot"
-require_relative "app/chat_thread"
-require_relative "app/dalle"
-require_relative "app/utils"
-require_relative "app/whisper"
 require_relative "app/prob"
 
-require_relative "app/gpt_bot"
 require_relative "app/airina_akaia_neurobot"
+require_relative "app/clean_bot"
 
 bots = {
   "airina_akaia_neurobot" => AirinaAkaiaNeurobot,
-  "gptbot" => GPTBot,
   "clean" => CleanBot
 }
 

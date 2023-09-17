@@ -1,8 +1,18 @@
 # frozen_string_literal: true
+require "open_ai_bot"
 
-class AirinaAkaiaNeurobot < GPTBot
+class AirinaAkaiaNeurobot < OpenAIBot
+
   on_every_message :react_to_sticker
   on_every_message :rust
+
+  def rust
+    return unless @msg.text&.match?(/\brust!?\b/i) && (rand < 0.4)
+
+    send_chat_action(:upload_video)
+    video = Faraday::UploadIO.new("#{__dir__}/../asset/rust.mp4", "mp4")
+    send_video(video)
+  end
 
   def react_to_sticker
     return unless @msg.sticker

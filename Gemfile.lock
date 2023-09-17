@@ -65,10 +65,14 @@ GEM
       rake (~> 13.0)
     method_source (1.0.0)
     multipart-post (2.3.0)
-    nokogiri (1.15.4-arm64-darwin)
-      racc (~> 1.4)
     nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
+    open_ai_bot (0.2.1)
+      down (~> 5.4)
+      http (~> 5.1)
+      nokogiri (~> 1.15)
+      ruby-openai (~> 5.1)
+      rubydium (>= 0.2.5)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -79,7 +83,7 @@ GEM
       faraday (>= 1)
       faraday-multipart (>= 1)
     ruby2_keywords (0.0.5)
-    rubydium (0.2.4)
+    rubydium (0.3.1)
       async (~> 2.3)
       telegram-bot-ruby (~> 1.0.0)
     telegram-bot-ruby (1.0.0)
@@ -94,16 +98,16 @@ GEM
     zeitwerk (2.6.11)
 
 PLATFORMS
-  arm64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
   down (~> 5.4)
   http (~> 5.1)
   nokogiri (~> 1.15)
+  open_ai_bot
   pry
   ruby-openai (~> 5.1)
-  rubydium (>= 0.2.4)
+  rubydium (>= 0.3.1)
 
 BUNDLED WITH
    2.4.19
