@@ -35,7 +35,7 @@ module Whisper
   end
 
   def send_whisper_request(file)
-    open_ai.transcribe(
+    open_ai.audio.transcribe(
       parameters: {
         model: "whisper-1",
         file: file
