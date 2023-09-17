@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 require "open_ai_bot"
+require_relative "whisper_patches"
 
 class AirinaAkaiaNeurobot < OpenAIBot
+  include WhisperPatches
 
   on_every_message :react_to_sticker
   on_every_message :rust
