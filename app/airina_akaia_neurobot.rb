@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 require "open_ai_bot"
+require_relative "chat_gpt_patches"
 require_relative "whisper_patches"
 
 class AirinaAkaiaNeurobot < OpenAIBot
+  extend ChatGPTPatches
   include WhisperPatches
 
   on_every_message :react_to_sticker
