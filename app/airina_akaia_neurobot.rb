@@ -4,7 +4,7 @@ require_relative "chat_gpt_patches"
 require_relative "whisper_patches"
 
 class AirinaAkaiaNeurobot < OpenAIBot
-  extend ChatGPTPatches
+  include ChatGPTPatches
   include WhisperPatches
 
   on_every_message :react_to_sticker
