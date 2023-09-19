@@ -10,6 +10,12 @@ class AirinaAkaiaNeurobot < OpenAIBot
   on_every_message :react_to_sticker
   on_every_message :rust
 
+  def allowed_chat?
+    return true if config.open_ai[:whitelist] include? @user.id
+
+    super
+  end
+
   def rust
     return unless @msg.text&.match?(/\brust!?\b/i) && (rand < 0.4)
 
