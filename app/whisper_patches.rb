@@ -1,17 +1,19 @@
 module WhisperPatches
-  def send_whisper_response(text)
-    if (@user.username == config.owner_username) && safe_delete(@msg)
-      send_text_in_place_of_voice(text)
+  def send_whisper_response(transcript)
+    if (@user.username == config.owner_username)
+      try_swap_reply(transcript)
     else
-      reply(text)
+      reply(transcript)
     end
   end
 
-  def send_text_in_place_of_voice(text)
+  def try_swap_reply(transcript)
+    safe_delete(@msg)
+
     if @replies_to
-      reply_to_target(text)
+      reply_to_target(transcript)
     else
-      send_message(text)
+      send_message(transcript)
     end
   end
 end
