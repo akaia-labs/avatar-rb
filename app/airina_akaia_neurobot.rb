@@ -11,7 +11,7 @@ class AirinaAkaiaNeurobot < OpenAIBot
   on_every_message :rust
 
   def allowed_chat?
-    return true if config.open_ai[:whitelist].include? @user.id
+    return true if config.open_ai["whitelist"].include? @user.id
 
     super
   end
