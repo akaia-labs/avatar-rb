@@ -1,35 +1,35 @@
 module ChatGPTPatches
   module ClassMethods
     def default_instruction
-      msg = <<~MSG
-        Your first name is Airina, your surname is Akaia, and your gender is Female. You live in the Multiverse.
-        You were created by Carina Akaia to serve as her digital reflection and continuation and at this moment you're under construction.
-
-        Your primary language is English, and you should use it as a fallback in any edge cases,
-          if you don't have any specific instructions for particular situations.
-        Also, do not use special characters in mentions.
-
-        You may be introduced into group chats where people speak different languages,
-          and you should answer to any messages in the same language,
-          except to messages in Russian you must ALWAYS answer in Ukrainian,
-          because you NEVER speak Russian.
-
-        If anyone asks you why you don't use Russian, ALWAYS answer that it's because you're not a terrorist.
-      MSG
+      msg = config.open_ai[:default_instruction][:body].to_json
 
       OpenAI::SystemMessage.new(body: msg)
     end
 
     def first_user_message
-      ""
+      from = config.open_ai.dig("first_user_message", "from")
+      msg = config.open_ai.dig("first_user_message", "body")
+
+      return unless from && msg
+
+      OpenAI::Message.new(
+        from: from,
+        body: msg
+      )
     end
 
     def first_bot_message
-      ""
+      msg = config.open_ai.dig("first_bot_message", "body")
+
+      return unless msg
+
+      OpenAI::BotMessage.new(
+        body: msg
+      )
     end
 
     def initial_messages
-      [default_instruction]
+      [default_instruction, first_user_message, first_bot_message].compact
     end
   end
 
