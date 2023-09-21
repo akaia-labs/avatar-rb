@@ -9,6 +9,21 @@ class AirinaAkaiaNeurobot < OpenAIBot
 
   on_every_message :react_to_sticker
   on_every_message :rust
+  on_every_message :try_swap_animation
+
+  def try_swap_animation
+    return unless @user.username == config.owner_username
+    return unless @msg.animation
+
+    safe_delete(@msg)
+
+    @api.send_animation(
+      chat_id: @chat.id,
+      animation: @msg.animation.file_id,
+      reply_to_message_id: @replies_to&.message_id,
+      message_thread_id: @topic_id
+    )
+  end
 
   def allowed_chat?
     return true if config.open_ai[:whitelist].include? @user.id
