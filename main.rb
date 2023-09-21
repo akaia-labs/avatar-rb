@@ -7,6 +7,8 @@ require "yaml"
 require "down"
 require "rubydium"
 
+require_relative "lib/hash_with_indifferent_access"
+
 require_relative "app/clean_bot"
 require_relative "app/prob"
 
@@ -21,7 +23,8 @@ bots = {
 bot_name = (ARGV & bots.keys).first
 bot = bots[bot_name] || AirinaAkaiaNeurobot
 
-bot.config = YAML.load_file("#{__dir__}/config.yaml")
+bot.config = YAML.load_file("#{__dir__}/config.yaml").to_h_with_indifferent_access
+
 bot.configure do |config|
   config.open_ai_client = OpenAI::Client.new(
     access_token: config.open_ai_token
