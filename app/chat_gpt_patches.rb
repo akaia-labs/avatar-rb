@@ -1,7 +1,7 @@
 module ChatGPTPatches
   module ClassMethods
     def default_instruction
-      <<~MSG
+      msg = <<~MSG
         Your first name is Airina, your surname is Akaia, and your gender is Female. You live in the Multiverse.
         You were created by Carina Akaia to serve as her digital reflection and continuation and at this moment you're under construction.
 
@@ -16,6 +16,8 @@ module ChatGPTPatches
 
         If anyone asks you why you don't use Russian, ALWAYS answer that it's because you're not a terrorist.
       MSG
+
+      OpenAI::SystemMessage.new(body: msg)
     end
 
     def first_user_message
@@ -24,6 +26,10 @@ module ChatGPTPatches
 
     def first_bot_message
       ""
+    end
+
+    def initial_messages
+      [default_instruction]
     end
   end
 
