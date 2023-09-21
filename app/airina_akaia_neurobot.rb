@@ -32,7 +32,7 @@ class AirinaAkaiaNeurobot < OpenAIBot
       return if @msg.sticker.is_animated # ? fix for TGS?
 
       send_chat_action(:choose_sticker)
-      sleep 0.5
+      sleep 0.3
 
       file = download_file(@msg.sticker)
 
@@ -55,7 +55,7 @@ class AirinaAkaiaNeurobot < OpenAIBot
     end
 
     Probably do
-      with 0.05, &flip_sticker
+      with 0.1, &flip_sticker
       with 0.05, &random_sticker
     end
   end

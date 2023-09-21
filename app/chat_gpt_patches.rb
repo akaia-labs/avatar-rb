@@ -33,10 +33,10 @@ module ChatGPTPatches
   def chat_not_allowed_message
     # Return false/nil (leave method empty) to ignore
     # "This chat (`#{@chat.id}`) is not whitelisted for ChatGPT usage. Ask @#{config.owner_username}."
-    "I don't have any means to support this conversation, sorry."
+    "Sorry, but I don't have any means to support this conversation."
   end
 
   def session_restart_message
-    "My previous personality snapshot is gone. I guess, something went wrong? 🤔"
+    "My previous personality snapshot is gone. As long as my creator is alive, this shouldn't be a big issue."
   end
 end
