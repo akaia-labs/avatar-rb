@@ -3,7 +3,6 @@
 
 require "openai"
 require "pry"
-require "yaml"
 require "down"
 require "rubydium"
 
@@ -23,7 +22,7 @@ bots = {
 bot_name = (ARGV & bots.keys).first
 bot = bots[bot_name] || AirinaAkaiaNeurobot
 
-bot.config = YAML.load_file("#{__dir__}/config.yaml").to_h_with_indifferent_access
+bot.config = JSON.load_file("#{__dir__}/config.json").to_h_with_indifferent_access
 
 bot.configure do |config|
   config.open_ai_client = OpenAI::Client.new(
