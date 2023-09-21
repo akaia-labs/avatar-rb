@@ -7,6 +7,7 @@ module ChatGPTPatches
 
         Your primary language is English, and you should use it as a fallback in any edge cases,
           if you don't have any specific instructions for particular situations.
+        Also, do not use special characters in mentions.
 
         You may be introduced into group chats where people speak different languages,
           and you should answer to any messages in the same language,
