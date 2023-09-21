@@ -37,6 +37,6 @@ module ChatGPTPatches
   end
 
   def session_restart_message
-    "My previous personality snapshot is gone. As long as my creator is alive, this shouldn't be a big issue."
+    "My previous personality snapshot is gone. Don't worry, as long as my creator is alive, this shouldn't be a big issue."
   end
 end
