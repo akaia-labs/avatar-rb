@@ -12,3 +12,8 @@ open_ai:
   whitelist:
     - 12345
     - -123 # Group chat IDs are negative
+  gpt_triggers:
+    regexps:
+      - '\AAirina,' # only single quotes!
+    strings:
+      - something?

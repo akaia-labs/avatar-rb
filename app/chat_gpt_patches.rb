@@ -40,4 +40,17 @@ module ChatGPTPatches
   def session_restart_message
     "My previous personality snapshot is gone. Don't worry, as long as my creator is alive, this shouldn't be a big issue."
   end
+
+  def matches_by_triggers?
+    string_triggers = config.open_ai[:gpt_triggers][:strings]
+    re_triggers = config.open_ai[:gpt_triggers][:regexps]
+
+    return true if string_triggers.any? { @text.include? _1 }
+
+    re_triggers.any? { @text.match? Regexp.new(_1) }
+  end
+
+  def bot_mentioned?
+    super || matches_by_triggers?
+  end
 end
