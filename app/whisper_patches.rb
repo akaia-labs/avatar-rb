@@ -9,7 +9,7 @@ module WhisperPatches
 
   def try_swap_reply(transcript)
     safe_delete(@msg)
-    message = BotMessage.new(body: transcript)
+    message = OpenAI::BotMessage.new(body: transcript)
     current_thread.add(message)
 
     if @replies_to
