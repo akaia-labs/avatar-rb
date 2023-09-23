@@ -16,6 +16,7 @@ class AirinaAkaiaNeurobot < OpenAIBot
     return unless @msg.animation
 
     safe_delete(@msg)
+    download_file(@msg.animation, "#{__dir__}/../asset/gifs/")
 
     @api.send_animation(
       chat_id: @chat.id,

@@ -1,3 +1,4 @@
 config.json
 Gemfile.lock
 .DS_Store
+asset/gifs/
