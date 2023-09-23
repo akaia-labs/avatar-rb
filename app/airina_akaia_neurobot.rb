@@ -11,6 +11,37 @@ class AirinaAkaiaNeurobot < OpenAIBot
   on_every_message :rust
   on_every_message :try_swap_animation
 
+  on_command "/d" do
+    return unless @user.username == config.owner_username
+    return unless @target&.username == config.bot_username
+
+    current_thread.delete(@replies_to.message_id)
+    safe_delete(@replies_to)
+    safe_delete(@msg)
+  end
+
+  on_command "/dd" do
+    return unless @user.username == config.owner_username
+
+    current_thread.history.select { _1.is_a? BotMessage }.each do |m|
+      safe_delete_by_id(m.id)
+    end
+
+    safe_delete(@msg)
+    init_session
+  end
+
+  on_command "/pry" do
+    binding.pry
+  end
+
+  on_command '/eval' do
+    return unless @user.username == config.owner_username
+
+    code = @text_without_command.strip
+    reply eval(code)
+  end
+
   def try_swap_animation
     return unless @user.username == config.owner_username
     return unless @msg.animation
@@ -74,5 +105,18 @@ class AirinaAkaiaNeurobot < OpenAIBot
       with 0.1, &flip_sticker
       with 0.05, &random_sticker
     end
+  end
+
+  def download_file(voice, dir=nil)
+    file_path = @api.get_file(file_id: voice.file_id)["result"]["file_path"]
+
+    url = "https://api.telegram.org/file/bot#{config.token}/#{file_path}"
+
+    file = Down.download(url)
+    dir ||= "."
+
+    FileUtils.mkdir(dir) unless Dir.exist? dir
+    FileUtils.mv(file.path, "#{dir.delete_suffix("/")}/#{file.original_filename}")
+    file
   end
 end
