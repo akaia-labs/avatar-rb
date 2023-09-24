@@ -14,8 +14,6 @@ class AirinaAkaiaNeurobot < OpenAIBot
       gpt_re_triggers = config.open_ai[:gpt_triggers][:regexps]
       action_triggers = config.open_ai[:actions][action]
 
-      join =
-
       string_triggers = []
       re_triggers = []
 
@@ -30,7 +28,6 @@ class AirinaAkaiaNeurobot < OpenAIBot
     end
   end
 
-  # on_every_message :dalle_with_custom_trigger
   on_every_message :react_to_sticker
   on_every_message :rust
   on_every_message :try_swap_animation
