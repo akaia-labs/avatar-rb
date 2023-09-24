@@ -13,7 +13,10 @@
     ],
     "gpt_triggers": {
       "regexps": ["\\AAirina,"],
-      "strings": ["something?"]
+      "strings": ["I wonder if someone could"]
+    },
+    "actions": {
+      "dalle": [ "imagine", "draw" ]
     },
     "default_instruction": {
       "body": {

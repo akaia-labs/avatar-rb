@@ -7,6 +7,30 @@ class AirinaAkaiaNeurobot < OpenAIBot
   include ChatGPTPatches
   include WhisperPatches
 
+  def self.triggers_for_action(action)
+    @triggers_for_action ||= {}
+    @triggers_for_action[action] ||= begin
+      gpt_string_triggers = config.open_ai[:gpt_triggers][:strings]
+      gpt_re_triggers = config.open_ai[:gpt_triggers][:regexps]
+      action_triggers = config.open_ai[:actions][action]
+
+      join =
+
+      string_triggers = []
+      re_triggers = []
+
+      action_triggers.map { |trigger|
+        attach_action = ->(str) { [str, trigger].join(" ").squeeze(" ") }
+
+        string_triggers += gpt_string_triggers.map(&attach_action)
+        re_triggers += gpt_re_triggers.map(&attach_action).map { Regexp.new(_1) }
+      }
+
+      { re: re_triggers, str: string_triggers }
+    end
+  end
+
+  # on_every_message :dalle_with_custom_trigger
   on_every_message :react_to_sticker
   on_every_message :rust
   on_every_message :try_swap_animation
@@ -40,6 +64,28 @@ class AirinaAkaiaNeurobot < OpenAIBot
 
     code = @text_without_command.strip
     reply eval(code)
+  end
+
+  def handle_gpt_command
+    super unless dalle_with_custom_trigger
+  end
+
+  def dalle_with_custom_trigger
+    triggers = self.class.triggers_for_action(:dalle)
+
+    triggers[:re].each do |re|
+      next unless @text.match?(re)
+
+      return dalle(@text.sub(re, ''))
+    end
+
+    triggers[:str].each do |str|
+      next unless @text.include?(str)
+
+      return dalle(@text.sub(str, ''))
+    end
+
+    false
   end
 
   def try_swap_animation
