@@ -37,7 +37,7 @@ class AirinaAkaiaNeurobot < OpenAIBot
 
   on_command "/d" do
     return unless @user.username == config.owner_username
-    return unless @target&.username == config.bot_username
+    return unless @target&.id.in? [config.bot_id, @user.id]
 
     current_thread.delete(@replies_to.message_id)
     safe_delete(@replies_to)
