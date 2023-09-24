@@ -47,7 +47,7 @@ class AirinaAkaiaNeurobot < OpenAIBot
   on_command "/dd" do
     return unless @user.username == config.owner_username
 
-    current_thread.history.select { _1.is_a? BotMessage }.each do |m|
+    current_thread.history.select { _1.is_a? OpenAI::BotMessage }.each do |m|
       safe_delete_by_id(m.id)
     end
 
