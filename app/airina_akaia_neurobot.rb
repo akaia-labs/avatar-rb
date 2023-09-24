@@ -96,7 +96,7 @@ class AirinaAkaiaNeurobot < OpenAIBot
   end
 
   def rust
-    return unless @msg.text&.match?(/\brust!?\b/i) && (rand < 0.4)
+    return unless @msg.text&.match?(/\brust!?\b/i) && (rand < 0.1)
 
     send_chat_action(:upload_video)
     video = Faraday::UploadIO.new("#{__dir__}/../asset/rust.mp4", "mp4")
