@@ -52,17 +52,6 @@ class AirinaAkaiaNeurobot < OpenAIBot
     init_session
   end
 
-  on_command "/pry" do
-    binding.pry
-  end
-
-  on_command '/eval' do
-    return unless @user.username == config.owner_username
-
-    code = @text_without_command.strip
-    reply eval(code)
-  end
-
   def handle_gpt_command
     super unless dalle_with_custom_trigger
   end
