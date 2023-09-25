@@ -151,4 +151,8 @@ class AirinaAkaiaNeurobot < OpenAIBot
     FileUtils.mv(file.path, "#{dir.delete_suffix("/")}/#{file.original_filename}")
     file
   end
+
+  on_command "/cancel" do
+    reply "Drone attack on #{@target} cancelled." if @target
+  end
 end
