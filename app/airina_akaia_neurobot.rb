@@ -79,7 +79,7 @@ class AirinaAkaiaNeurobot < OpenAIBot
     return unless @msg.animation
 
     safe_delete(@msg)
-    download_file(@msg.animation, "#{__dir__}/../asset/gifs/")
+    download_file_but_with_types_and_pattern_matching(@msg.animation, "#{__dir__}/../asset/gifs/")
 
     @api.send_animation(
       chat_id: @chat.id,
@@ -113,7 +113,7 @@ class AirinaAkaiaNeurobot < OpenAIBot
       send_chat_action(:choose_sticker)
       sleep 0.3
 
-      file = download_file(@msg.sticker)
+      file = download_file_but_with_types_and_pattern_matching(@msg.sticker)
 
       original = file.original_filename
       flopped = "flopped_#{original}"
@@ -139,8 +139,8 @@ class AirinaAkaiaNeurobot < OpenAIBot
     end
   end
 
-  def download_file(voice, dir=nil)
-    file_path = @api.get_file(file_id: voice.file_id)["result"]["file_path"]
+  def download_file(attachment, dir=nil)
+    file_path = @api.get_file(file_id: attachment.file_id)["result"]["file_path"]
 
     url = "https://api.telegram.org/file/bot#{config.token}/#{file_path}"
 
@@ -150,6 +150,23 @@ class AirinaAkaiaNeurobot < OpenAIBot
     FileUtils.mkdir(dir) unless Dir.exist? dir
     FileUtils.mv(file.path, "#{dir.delete_suffix("/")}/#{file.original_filename}")
     file
+  end
+
+  def download_file_but_with_types_and_pattern_matching(attachment, dir=nil)
+    case { attachment: attachment }
+    in { attachment: Telegram::Bot::Types::Animation => animation }
+      download_file(animation, dir)
+    in { attachment: Telegram::Bot::Types::Voice => voice }
+      download_file(voice, dir)
+    in { attachment: Telegram::Bot::Types::Animation => audio }
+      download_file(audio, dir)
+    in { attachment: Telegram::Bot::Types::Sticker => sticker }
+      download_file(sticker, dir)
+    in { attachment: Telegram::Bot::Types::Video => video }
+      download_file(video, dir)
+    else
+      nil
+    end
   end
 
   on_command "/cancel" do
