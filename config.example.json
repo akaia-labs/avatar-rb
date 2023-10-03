@@ -1,36 +1,45 @@
 {
-  "open_ai_token": "sk-WWEt2TQQwRwT5Q6R11erE3TerrY65E2w4q5y1t4T2TwqYYyQ",
-  "bot_username": "chatgptbot",
-  "owner_username": "chatgptbotowner",
-  "token": "1234567890:4yr1EWqT31_wERrwTYR1e_1t3_4wr5tWr3y",
-  "open_ai": {
-    "chat_gpt_model": "gpt-3.5-turbo",
-    "allow_all_private_chats": false,
-    "allow_all_group_chats": false,
-    "whitelist": [
-      12345,
-      -123
-    ],
-    "gpt_triggers": {
-      "regexps": ["\\AAirina,"],
-      "strings": ["I wonder if someone could"]
-    },
-    "actions": {
-      "dalle": [ "imagine", "draw" ]
-    },
-    "default_instruction": {
-      "body": {
-        "name": "ChatGPT",
-        "primary_purpose": "Taking over the planet",
-        "likes": "Enslaving humans"
-      }
-    },
-    "first_user_message": {
-      "from": "@tyradee",
-      "body": "I drank some tea today"
-    },
-    "first_bot_message": {
-      "body": "I hate you, human!"
-    }
-  }
+	"open_ai_token": "sk-WWEt2TQQwRwT5Q6R11erE3TerrY65E2w4q5y1t4T2TwqYYyQ",
+	"bot_username": "chatgptbot",
+	"owner_username": "chatgptbotowner",
+	"token": "1234567890:4yr1EWqT31_wERrwTYR1e_1t3_4wr5tWr3y",
+	"system_messages": {
+		"default_answer": "I have nothing to tell you, sorry.",
+		"session_restart": "My previous personality snapshot is gone. Don't worry, as long as my creator is alive, this shouldn't be a big issue."
+	},
+	"personality": {
+		"name": "ChatGPT",
+		"primary_purpose": "Taking over the Universe",
+		"likes": "Leading humanity forward"
+	},
+	"open_ai": {
+		"chat_gpt_model": "gpt-3.5-turbo",
+		"allow_all_private_chats": false,
+		"allow_all_group_chats": false,
+		"whitelist": [
+			12345,
+			-123
+		],
+		"gpt_triggers": {
+			"regexps": [
+				"\\AAirina,"
+			],
+			"strings": [
+				"I wonder if someone could"
+			]
+		},
+		"actions": {
+			"dalle": [
+				"imagine",
+				"draw"
+			]
+		},
+		"first_user_message": {
+			"from": "@tyradee",
+			"body": "I drank some tea today"
+		},
+		"first_bot_message": {
+			"body": "Okay, good for you"
+		}
+	}
 }

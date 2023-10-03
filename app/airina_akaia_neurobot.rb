@@ -13,13 +13,11 @@ class AirinaAkaiaNeurobot < OpenAIBot
       gpt_string_triggers = config.open_ai[:gpt_triggers][:strings]
       gpt_re_triggers = config.open_ai[:gpt_triggers][:regexps]
       action_triggers = config.open_ai[:actions][action]
-
       string_triggers = []
       re_triggers = []
 
       action_triggers.map { |trigger|
         attach_action = ->(str) { [str, trigger].join(" ").squeeze(" ") }
-
         string_triggers += gpt_string_triggers.map(&attach_action)
         re_triggers += gpt_re_triggers.map(&attach_action).map { Regexp.new(_1) }
       }
@@ -35,7 +33,6 @@ class AirinaAkaiaNeurobot < OpenAIBot
   on_command "/d" do
     return unless @user.username == config.owner_username
     return unless @target&.id.in? [config.bot_id, @user.id]
-
     current_thread.delete(@replies_to.message_id)
     safe_delete(@replies_to)
     safe_delete(@msg)
@@ -61,13 +58,11 @@ class AirinaAkaiaNeurobot < OpenAIBot
 
     triggers[:re].each do |re|
       next unless @text.match?(re)
-
       return dalle(@text.sub(re, ''))
     end
 
     triggers[:str].each do |str|
       next unless @text.include?(str)
-
       return dalle(@text.sub(str, ''))
     end
 
@@ -91,7 +86,6 @@ class AirinaAkaiaNeurobot < OpenAIBot
 
   def allowed_chat?
     return true if config.open_ai[:whitelist].include? @user.id
-
     super
   end
 
@@ -111,10 +105,7 @@ class AirinaAkaiaNeurobot < OpenAIBot
       return if @msg.sticker.is_animated # ? fix for TGS?
 
       send_chat_action(:choose_sticker)
-      sleep 0.3
-
       file = download_file_but_with_types_and_pattern_matching(@msg.sticker)
-
       original = file.original_filename
       flopped = "flopped_#{original}"
       `convert ./#{original} -flop ./#{flopped}`
@@ -126,7 +117,6 @@ class AirinaAkaiaNeurobot < OpenAIBot
 
     random_sticker = lambda do
       send_chat_action(:choose_sticker)
-      sleep 2
       sticker_pack_name = @msg.sticker.set_name
       stickers = @api.get_sticker_set(name: sticker_pack_name)["result"]["stickers"]
       random_sticker_id = stickers.sample["file_id"]
@@ -135,7 +125,6 @@ class AirinaAkaiaNeurobot < OpenAIBot
 
     Probably do
       with 0.1, &flip_sticker
-      with 0.05, &random_sticker
     end
   end
 
@@ -146,7 +135,6 @@ class AirinaAkaiaNeurobot < OpenAIBot
 
     file = Down.download(url)
     dir ||= "."
-
     FileUtils.mkdir(dir) unless Dir.exist? dir
     FileUtils.mv(file.path, "#{dir.delete_suffix("/")}/#{file.original_filename}")
     file
