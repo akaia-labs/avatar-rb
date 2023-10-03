@@ -1,7 +1,7 @@
 module ChatGPTPatches
   module ClassMethods
     def default_instruction
-      OpenAI::SystemMessage.new(body: config[:personality].to_json)
+      OpenAI::SystemMessage.new(body: config.personality.to_json)
     end
 
     def first_user_message
