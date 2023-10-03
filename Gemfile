@@ -8,4 +8,4 @@ gem "nokogiri", "~> 1.15"
 gem "rubydium", ">= 0.3.10"
 gem "ruby-openai", "~> 5.1"
 gem "pry"
-gem "open_ai_bot", '~> 0.2.7'
+gem "open_ai_bot", '~> 0.2'
