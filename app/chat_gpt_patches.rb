@@ -1,9 +1,7 @@
 module ChatGPTPatches
   module ClassMethods
     def default_instruction
-      msg = config.open_ai[:default_instruction][:body].to_json
-
-      OpenAI::SystemMessage.new(body: msg)
+      OpenAI::SystemMessage.new(body: config.personality.to_json)
     end
 
     def first_user_message
@@ -12,10 +10,7 @@ module ChatGPTPatches
 
       return unless from && msg
 
-      OpenAI::Message.new(
-        from: from,
-        body: msg
-      )
+      OpenAI::Message.new(from: from, body: msg)
     end
 
     def first_bot_message
@@ -23,9 +18,7 @@ module ChatGPTPatches
 
       return unless msg
 
-      OpenAI::BotMessage.new(
-        body: msg
-      )
+      OpenAI::BotMessage.new(body: msg)
     end
 
     def initial_messages
