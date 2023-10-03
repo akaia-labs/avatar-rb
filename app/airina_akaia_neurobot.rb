@@ -115,14 +115,6 @@ class AirinaAkaiaNeurobot < OpenAIBot
       FileUtils.rm_rf([original, flopped]) if file
     end
 
-    random_sticker = lambda do
-      send_chat_action(:choose_sticker)
-      sticker_pack_name = @msg.sticker.set_name
-      stickers = @api.get_sticker_set(name: sticker_pack_name)["result"]["stickers"]
-      random_sticker_id = stickers.sample["file_id"]
-      send_sticker(random_sticker_id)
-    end
-
     Probably do
       with 0.1, &flip_sticker
     end
