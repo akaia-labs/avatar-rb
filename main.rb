@@ -11,16 +11,16 @@ require_relative "lib/hash_with_indifferent_access"
 require_relative "app/clean_bot"
 require_relative "app/prob"
 
-require_relative "app/airina_akaia_neurobot"
+require_relative "app/akaia_avatar"
 require_relative "app/clean_bot"
 
 bots = {
-  "airina_akaia_neurobot" => AirinaAkaiaNeurobot,
+  "akaia_avatar" => AkaiaAvatar,
   "clean" => CleanBot
 }
 
 bot_name = (ARGV & bots.keys).first
-bot = bots[bot_name] || AirinaAkaiaNeurobot
+bot = bots[bot_name] || AkaiaAvatar
 
 bot.config = JSON.load_file("#{__dir__}/config.json").to_h_with_indifferent_access
 

@@ -3,7 +3,7 @@ require "open_ai_bot"
 require_relative "chat_gpt_patches"
 require_relative "whisper_patches"
 
-class AirinaAkaiaNeurobot < OpenAIBot
+class AkaiaAvatar < OpenAIBot
   include ChatGPTPatches
   include WhisperPatches
 

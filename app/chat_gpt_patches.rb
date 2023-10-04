@@ -30,6 +30,10 @@ module ChatGPTPatches
     base.extend(ClassMethods)
   end
 
+  def new_thread(chat_id)
+    super(chat_id, config.open_ai[:chat_gpt_model])
+  end
+
   def chat_not_allowed_message
     # Return false/nil (leave method empty) to ignore
     # "This chat (`#{@chat.id}`) is not whitelisted for ChatGPT usage. Ask @#{config.owner_username}."
