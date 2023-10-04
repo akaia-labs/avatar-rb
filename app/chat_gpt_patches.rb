@@ -1,5 +1,9 @@
 module ChatGPTPatches
   module ClassMethods
+    def new_thread(chat_id)
+      super(chat_id, config.open_ai[:chat_gpt_model])
+    end
+
     def default_instruction
       OpenAI::SystemMessage.new(body: config.personality.to_json)
     end
@@ -23,10 +27,6 @@ module ChatGPTPatches
 
     def initial_messages
       [default_instruction, first_user_message, first_bot_message].compact
-    end
-
-    def new_thread(chat_id)
-      super(chat_id, config.open_ai[:chat_gpt_model])
     end
   end
 
