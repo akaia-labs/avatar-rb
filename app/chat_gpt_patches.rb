@@ -24,14 +24,14 @@ module ChatGPTPatches
     def initial_messages
       [default_instruction, first_user_message, first_bot_message].compact
     end
+
+    def new_thread(chat_id)
+      super(chat_id, config.open_ai[:chat_gpt_model])
+    end
   end
 
   def self.included(base)
     base.extend(ClassMethods)
-  end
-
-  def new_thread(chat_id)
-    super(chat_id, config.open_ai[:chat_gpt_model])
   end
 
   def chat_not_allowed_message
