@@ -36,15 +36,15 @@ class AkaiaAvatar < OpenAIBot
   on_every_message :try_swap_animation
 
   on_command "/d" do
-    return unless @user.username == config.owner_username
-    return unless @target&.id.in? [config.bot_id, @user.id]
+    next unless @user.username == config.owner_username
+    next unless @target&.id.in? [config.bot_id, @user.id]
     current_thread.delete(@replies_to.message_id)
     safe_delete(@replies_to)
     safe_delete(@msg)
   end
 
   on_command "/dd" do
-    return unless @user.username == config.owner_username
+    next unless @user.username == config.owner_username
 
     current_thread.history.select { _1.is_a? OpenAI::BotMessage }.each do |m|
       safe_delete_by_id(m.id)
@@ -160,7 +160,7 @@ class AkaiaAvatar < OpenAIBot
   end
 
   on_command "🦀" do
-    return unless @user.username == config.owner_username
+    next unless @user.username == config.owner_username
 
     if @target
       reply "Crab attack on @#{@target.username} initiated."
@@ -174,7 +174,7 @@ class AkaiaAvatar < OpenAIBot
   end
 
   on_command "/cancel" do
-    return unless @user.username == config.owner_username
+    next unless @user.username == config.owner_username
 
     if @target
       reply "Crab attack on @#{@target.username} cancelled."
