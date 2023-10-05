@@ -154,6 +154,6 @@ class AkaiaAvatar < OpenAIBot
   end
 
   on_command "/cancel" do
-    reply "Drone attack on @#{@target.username} cancelled." if @target
+    reply "Crab attack on @#{@target.username} cancelled." if @target
   end
 end
