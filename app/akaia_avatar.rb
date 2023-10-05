@@ -40,7 +40,7 @@ class AkaiaAvatar < OpenAIBot
     next unless @target&.id.in? [config.bot_id, @user.id]
     current_thread.delete(@replies_to.message_id)
     safe_delete(@replies_to)
-    safe_delete(@msg, only_bot_or_owner: false)
+    safe_delete(@msg, only_bot_or_owner: true)
   end
 
   on_command "/dd" do
@@ -50,7 +50,7 @@ class AkaiaAvatar < OpenAIBot
       safe_delete_by_id(m.id)
     end
 
-    safe_delete(@msg, only_bot_or_owner: false)
+    safe_delete(@msg, only_bot_or_owner: true)
     init_session
   end
 
