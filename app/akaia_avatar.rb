@@ -27,7 +27,7 @@ class AkaiaAvatar < OpenAIBot
   end
 
   on_every_message :react_to_sticker
-  on_every_message :rust
+  on_every_message :🦀🦀🦀
   on_every_message :try_swap_animation
 
   on_command "/d" do
@@ -89,11 +89,11 @@ class AkaiaAvatar < OpenAIBot
     super
   end
 
-  def rust
+  def 🦀🦀🦀
     return unless @msg.text&.match?(/\brust!?\b/i) && (rand < 0.1)
 
     send_chat_action(:upload_video)
-    video = Faraday::UploadIO.new("#{__dir__}/../asset/rust.mp4", "mp4")
+    video = Faraday::UploadIO.new("#{__dir__}/../asset/🦀🦀🦀.mp4", "mp4")
     send_video(video)
   end
 
@@ -147,6 +147,10 @@ class AkaiaAvatar < OpenAIBot
     else
       nil
     end
+  end
+
+  on_command "🦀" do
+    reply "Crab attack on @#{@target.username} initiated." if @target
   end
 
   on_command "/cancel" do
