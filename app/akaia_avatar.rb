@@ -7,6 +7,11 @@ class AkaiaAvatar < OpenAIBot
   include ChatGPTPatches
   include WhisperPatches
 
+  def initialize(...)
+    super(...)
+    @@crab_attack_targets ||= []
+  end
+
   def self.triggers_for_action(action)
     @triggers_for_action ||= {}
     @triggers_for_action[action] ||= begin
@@ -149,11 +154,31 @@ class AkaiaAvatar < OpenAIBot
     end
   end
 
+  def get_command(text)
+    return text if text == "🦀"
+    super(text)
+  end
+
   on_command "🦀" do
-    reply "Crab attack on @#{@target.username} initiated." if @target
+    return unless @user.username == config.owner_username
+
+    if @target
+      reply "Crab attack on @#{@target.username} initiated."
+      @@crab_attack_targets << @target.id
+      10.times do
+        reply_to_target "🦀"
+        sleep rand(5..15)
+        break unless @target.id.in? @@crab_attack_targets
+      end
+    end
   end
 
   on_command "/cancel" do
-    reply "Crab attack on @#{@target.username} cancelled." if @target
+    return unless @user.username == config.owner_username
+
+    if @target
+      reply "Crab attack on @#{@target.username} cancelled."
+      @@crab_attack_targets.delete(@target.id)
+    end
   end
 end
