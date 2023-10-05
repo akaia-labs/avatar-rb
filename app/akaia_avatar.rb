@@ -36,7 +36,7 @@ class AkaiaAvatar < OpenAIBot
   on_every_message :try_swap_animation
 
   on_command "/d" do
-    next unless @user.username == config.owner_username
+    next unless (@user.username == config.owner_username) || can_delete_messages?(@user.id)
     next unless @target&.id.in? [config.bot_id, @user.id]
     current_thread.delete(@replies_to.message_id)
     safe_delete(@replies_to)
@@ -44,7 +44,7 @@ class AkaiaAvatar < OpenAIBot
   end
 
   on_command "/dd" do
-    next unless @user.username == config.owner_username
+    next unless @user.username == config.owner_username || can_delete_messages?(@user.id)
 
     current_thread.history.select { _1.is_a? OpenAI::BotMessage }.each do |m|
       safe_delete_by_id(m.id)
