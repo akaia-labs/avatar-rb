@@ -40,17 +40,17 @@ class AkaiaAvatar < OpenAIBot
     next unless @target&.id.in? [config.bot_id, @user.id]
     current_thread.delete(@replies_to.message_id)
     safe_delete(@replies_to)
-    safe_delete(@msg)
+    safe_delete(@msg, only_bot_or_owner: false)
   end
 
   on_command "/dd" do
     next unless @user.username == config.owner_username || can_delete_messages?(@user.id)
 
-    current_thread.history.select { _1.is_a? OpenAI::BotMessage }.each do |m|
+    current_thread.history.each do |m|
       safe_delete_by_id(m.id)
     end
 
-    safe_delete(@msg)
+    safe_delete(@msg, only_bot_or_owner: false)
     init_session
   end
 
