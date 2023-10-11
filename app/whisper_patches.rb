@@ -5,11 +5,11 @@ module WhisperPatches
     else
       reply(transcript)
     end
+
+    safe_delete(@msg)
   end
 
   def try_swap_reply(transcript)
-    safe_delete(@msg)
-
     bot_message =
       if @replies_to
         reply_to_target(transcript)
