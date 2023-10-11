@@ -2,11 +2,10 @@ module WhisperPatches
   def send_whisper_response(transcript)
     if (@user.username == config.owner_username)
       try_swap_reply(transcript)
+      safe_delete(@msg)
     else
       reply(transcript)
     end
-
-    safe_delete(@msg)
   end
 
   def try_swap_reply(transcript)
