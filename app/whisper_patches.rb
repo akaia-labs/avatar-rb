@@ -29,10 +29,10 @@ module WhisperPatches
   end
 
   def send_whisper_error(error)
-    @last_whisper_error_time ||= Time.now
-    return if (Time.now - @last_whisper_error_time) < 5.minutes
+    @@last_whisper_error_time ||= Time.now
+    return if (Time.now - @@last_whisper_error_time) < 5.minutes
 
-    @last_whisper_error_time = Time.now
+    @@last_whisper_error_time = Time.now
     gif = Faraday::UploadIO.new("#{__dir__}/../asset/whisper_error.mp4", "mp4")
 
     @api.send_animation(

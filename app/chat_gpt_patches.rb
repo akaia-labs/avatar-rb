@@ -41,10 +41,10 @@ module ChatGPTPatches
   end
 
   def send_chat_gpt_error(text)
-    @last_gpt_error_time ||= Time.now
-    return if (Time.now - @last_gpt_error_time) < 5.minutes
+    @@last_gpt_error_time ||= Time.now
+    return if (Time.now - @@last_gpt_error_time) < 5.minutes
 
-    @last_gpt_error_time = Time.now
+    @@last_gpt_error_time = Time.now
 
     super(text)
   end
