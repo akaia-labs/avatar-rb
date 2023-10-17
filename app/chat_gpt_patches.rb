@@ -42,7 +42,7 @@ module ChatGPTPatches
 
   def send_chat_gpt_error(text)
     @last_gpt_error_time ||= Time.now
-    return if (@last_error_time - Time.now) < 5.minutes
+    return if (Time.now - @last_error_time) < 5.minutes
 
     @last_gpt_error_time = Time.now
 
