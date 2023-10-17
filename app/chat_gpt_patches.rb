@@ -40,6 +40,15 @@ module ChatGPTPatches
     config.system_messages[:default_answer]
   end
 
+  def send_chat_gpt_error(text)
+    @last_gpt_error_time ||= Time.now
+    return if (@last_error_time - Time.now) < 5.minutes
+
+    @last_gpt_error_time = Time.now
+
+    super(text)
+  end
+
   def session_restart_message
     config.system_messages[:session_restart]
   end
