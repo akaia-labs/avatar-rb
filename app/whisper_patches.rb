@@ -27,4 +27,17 @@ module WhisperPatches
 
     current_thread.add(message)
   end
+
+  def send_whisper_error(error)
+    gif = Faraday::UploadIO.new("#{__dir__}/../asset/whisper_error.mp4", "mp4")
+
+    @api.send_animation(
+      chat_id: @chat.id,
+      animation: gif,
+      reply_to_message_id: @replies_to&.message_id,
+      message_thread_id: @topic_id,
+      caption: "```\n#{error["message"]}```",
+      parse_mode: "Markdown"
+    )
+  end
 end
