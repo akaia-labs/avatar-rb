@@ -162,12 +162,13 @@ class AkaiaAvatar < OpenAIBot
   end
 
   def near_balances(account_id)
+    near_balance_view = `near tokens #{account_id} view-near-balance network-config mainnet now`
+    usdt_balance_view = `near tokens #{account_id} view-ft-balance usdt.tether-token.near network-config mainnet now`
+
     [
       "NEAR account balance for #{account_id}:",
-
-      `near tokens #{account_id} view-near-balance network-config mainnet now`.match(/(\d+(\.\d+)? NEAR)/)[0]
-
-      `near tokens #{account_id} view-ft-balance usdt.tether-token.near network-config mainnet now`.match(/(?i:\d+(\.\d+)? usdt)/)[0]
+      near_balance_view.match(/(\d+(\.\d+)? NEAR)/)[0]
+      usdt_balance_view.match(/(\d+(\.\d+)? USDt)/)[0]
     ].join("\n")
   end
 
