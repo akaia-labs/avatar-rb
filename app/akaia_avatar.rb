@@ -167,7 +167,7 @@ class AkaiaAvatar < OpenAIBot
 
     [
       "NEAR account balance for #{account_id}:",
-      near_balance_view.match(/(\d+(\.\d+)? NEAR)/)[0]
+      near_balance_view.match(/(\d+(\.\d+)? NEAR)/)[0],
       usdt_balance_view.match(/(\d+(\.\d+)? USDt)/)[0]
     ].join("\n")
   end
