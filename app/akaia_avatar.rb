@@ -104,29 +104,6 @@ class AkaiaAvatar < OpenAIBot
     send_video(video)
   end
 
-  def react_to_sticker
-    return unless @msg.sticker
-
-    flip_sticker = lambda do
-      return if @msg.sticker.is_video
-      return if @msg.sticker.is_animated # ? fix for TGS?
-
-      send_chat_action(:choose_sticker)
-      file = download_file_but_with_types_and_pattern_matching(@msg.sticker)
-      original = file.original_filename
-      flopped = "flopped_#{original}"
-      `convert ./#{original} -flop ./#{flopped}`
-      sticker = Faraday::UploadIO.new(flopped, original.split(".").last)
-      send_sticker(sticker)
-    ensure
-      FileUtils.rm_rf([original, flopped]) if file
-    end
-
-    Probably do
-      with 0.1, &flip_sticker
-    end
-  end
-
   def download_file(attachment, dir=nil)
     file_path = @api.get_file(file_id: attachment.file_id)["result"]["file_path"]
 
@@ -182,5 +159,24 @@ class AkaiaAvatar < OpenAIBot
       reply "Crab attack on @#{@target.username} cancelled."
       @@crab_attack_targets.delete(@target.id)
     end
+  end
+
+  def near_balances(account_id)
+    [
+      "NEAR account balance for #{account_id}:",
+
+      `near tokens #{account_id} view-near-balance network-config mainnet now`.match(/(\d+(\.\d+)? NEAR)/)[0]
+
+      `near tokens #{account_id} view-ft-balance usdt.tether-token.near network-config mainnet now`.match(/(?i:\d+(\.\d+)? usdt)/)[0]
+    ].join("\n")
+  end
+
+  on_command "/near" do
+    reply near_balances("aika.akaia.near")
+  end
+
+  on_command "/mynear" do
+    next unless @user.username == config.owner_username
+    reply near_balances("carina.akaia.near")
   end
 end
