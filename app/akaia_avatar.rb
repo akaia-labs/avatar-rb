@@ -160,24 +160,4 @@ class AkaiaAvatar < OpenAIBot
       @@crab_attack_targets.delete(@target.id)
     end
   end
-
-  def near_balances(account_id)
-    near_balance_view = `near tokens #{account_id} view-near-balance network-config mainnet now`
-    usdt_balance_view = `near tokens #{account_id} view-ft-balance usdt.tether-token.near network-config mainnet now`
-
-    [
-      "NEAR account balance for #{account_id}:",
-      near_balance_view.match(/(\d+(\.\d+)? NEAR)/)[0],
-      usdt_balance_view.match(/(\d+(\.\d+)? USDt)/)[0]
-    ].join("\n")
-  end
-
-  on_command "/near" do
-    reply near_balances("aika.akaia.near")
-  end
-
-  on_command "/mynear" do
-    next unless @user.username == config.owner_username
-    reply near_balances("carina.akaia.near")
-  end
 end
