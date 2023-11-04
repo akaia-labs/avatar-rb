@@ -31,7 +31,6 @@ class AkaiaAvatar < OpenAIBot
     end
   end
 
-  on_every_message :react_to_sticker
   on_every_message :🦀🦀🦀
   on_every_message :try_swap_animation
 
