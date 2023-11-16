@@ -30,7 +30,7 @@ module WhisperPatches
 
   def send_whisper_error(error)
     @@last_whisper_error_time ||= Time.now
-    return if (Time.now - @@last_whisper_error_time) < 900
+    return if (Time.now - @@last_whisper_error_time) < 18000
 
     @@last_whisper_error_time = Time.now
     gif = Faraday::UploadIO.new("#{__dir__}/../asset/whisper_error.mp4", "mp4")
