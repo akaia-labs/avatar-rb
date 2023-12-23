@@ -2,10 +2,12 @@
 require "open_ai_bot"
 require_relative "chat_gpt_patches"
 require_relative "whisper_patches"
+require_relative 'dalle_patches'
 
 class AkaiaAvatar < OpenAIBot
   include ChatGPTPatches
   include WhisperPatches
+  include DallePatches
 
   def initialize(...)
     super(...)
@@ -33,6 +35,7 @@ class AkaiaAvatar < OpenAIBot
 
   on_every_message :🦀🦀🦀
   on_every_message :try_swap_animation
+  on_command "/dalle3", :dalle3
 
   on_command "/d" do
     next unless @text == "/d"
