@@ -64,12 +64,12 @@ class AkaiaAvatar < OpenAIBot
 
     triggers[:re].each do |re|
       next unless @text.match?(re)
-      return dalle(@text.sub(re, ''))
+      return dalle3(@text.sub(re, ''))
     end
 
     triggers[:str].each do |str|
       next unless @text.include?(str)
-      return dalle(@text.sub(str, ''))
+      return dalle3(@text.sub(str, ''))
     end
 
     false
