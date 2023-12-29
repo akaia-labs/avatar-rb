@@ -9,7 +9,7 @@ module DallePatches
 
       puts "Sending request"
       response = open_ai.images.generate(parameters: {
-        prompt: prompt, size: "1024x1792", quality: "hd", model: "dall-e-3"
+        prompt: prompt, size: "1792x1024", quality: "hd", model: "dall-e-3"
       })
 
       send_chat_action(:upload_photo)
