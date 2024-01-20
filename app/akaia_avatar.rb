@@ -36,6 +36,9 @@ class AkaiaAvatar < OpenAIBot
   on_every_message :🦀🦀🦀
   on_every_message :try_swap_animation
   on_command "/dalle3", :dalle3
+  on_command "/dalle3file" do
+    dalle3(compress: false)
+  end
 
   on_command "/d" do
     next unless @text == "/d"

@@ -1,5 +1,5 @@
 module DallePatches
-  def dalle3(prompt=nil)
+  def dalle3(prompt=nil, compress: true)
     return unless allowed_chat?
 
     attempt(3) do
@@ -21,8 +21,16 @@ module DallePatches
       if response["error"]
         reply_code(response)
       else
-        send_photo(url, reply_to_message_id: @msg.message_id)
+        if compress
+          send_photo(url, reply_to_message_id: @msg.message_id)
+        else
+          send_document(url, reply_to_message_id: @msg.message_id)
+        end
       end
     end
+  end
+
+  def send_document(url, **options)
+    @api.send_document(document: url, chat_id: @chat.id, **options)
   end
 end
