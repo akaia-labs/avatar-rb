@@ -3,7 +3,7 @@ module DallePatches
     return unless allowed_chat?
 
     attempt(3) do
-      puts "Received a /dalle command"
+      puts "DALL-E workflow trigered"
       prompt ||= @replies_to&.text || @text_without_command
       send_chat_action(:upload_photo)
 

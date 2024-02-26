@@ -70,12 +70,12 @@ class AkaiaAvatar < OpenAIBot
 
     triggers[:re].each do |re|
       next unless @text.match?(re)
-      return dalle3(@text.sub(re, ''))
+      return dalle3(@text.sub(re, ''), compress: false)
     end
 
     triggers[:str].each do |str|
       next unless @text.include?(str)
-      return dalle3(@text.sub(str, ''))
+      return dalle3(@text.sub(str, ''), compress: false)
     end
 
     false
@@ -102,7 +102,7 @@ class AkaiaAvatar < OpenAIBot
   end
 
   def 🦀🦀🦀
-    return unless @msg.text&.match?(/\brust!?\b/i) && (rand < 0.1)
+    return unless @msg.text&.match?(/\brust!?\b/i) && (rand < 0.05)
 
     send_chat_action(:upload_video)
     video = Faraday::UploadIO.new("#{__dir__}/../asset/🦀🦀🦀.mp4", "mp4")
