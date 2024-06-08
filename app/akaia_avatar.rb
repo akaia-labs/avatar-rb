@@ -110,6 +110,8 @@ class AkaiaAvatar < OpenAIBot
   end
 
   def download_file(attachment, dir=nil)
+    return unless attachment
+
     file_path = @api.get_file(file_id: attachment.file_id)["result"]["file_path"]
 
     url = "https://api.telegram.org/file/bot#{config.token}/#{file_path}"

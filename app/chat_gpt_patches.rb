@@ -1,7 +1,7 @@
 module ChatGPTPatches
   module ClassMethods
     def new_thread(chat_id)
-      super(chat_id, config.open_ai[:chat_gpt_model])
+      super(chat_id, config.open_ai[:chat_gpt_model].to_sym)
     end
 
     def default_instruction

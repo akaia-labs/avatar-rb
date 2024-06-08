@@ -5,6 +5,7 @@ require "openai"
 require "pry"
 require "down"
 require "rubydium"
+require "base64"
 
 require_relative "lib/hash_with_indifferent_access"
 
