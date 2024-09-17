@@ -40,6 +40,12 @@ class AkaiaAvatar < OpenAIBot
     dalle3(compress: false)
   end
 
+  on_command "/sensors" do
+    result = `sensors`
+    safe_delete(@msg)
+    send_message(result)
+  end
+
   on_command "/d" do
     next unless @text == "/d"
     next unless (@user.username == config.owner_username) || can_delete_messages?(@user.id)
